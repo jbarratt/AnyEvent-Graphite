@@ -4,6 +4,7 @@ MANIFEST
 README
 script/graphite_client
 lib/AnyEvent/Graphite.pm
+lib/AnyEvent/Graphite/SNMPAgent.pm
 t/00_load.t
 Makefile.PL
 META.yml
