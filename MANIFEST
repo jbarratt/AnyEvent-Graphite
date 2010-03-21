@@ -2,7 +2,8 @@ Build.PL
 Changes
 MANIFEST
 README
+script/graphite_client
 lib/AnyEvent/Graphite.pm
-t/00-load.t
-t/pod-coverage.t
-t/pod.t
+t/00_load.t
+Makefile.PL
+META.yml

@@ -7,9 +7,10 @@ my $builder = Module::Build->new(
     license             => 'perl',
     dist_author         => 'Joshua Barratt <josh@mediatemple.net>',
     dist_version_from   => 'lib/AnyEvent/Graphite.pm',
+    script_files        => [ 'script/graphite_client' ],
     requires => {
         'AnyEvent' => 0,
-    }
+    },
     build_requires => {
         'Test::More' => 0,
     },

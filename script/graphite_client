@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+use AnyEvent::Graphite;
+
+use Getopt::Long;
+
+my $opt = {};
+GetOptions($opt, 'host=s', 'port=i', 'value=i', 'key=s');
+unless (defined($opt->{key}) && defined($opt->{value})) {
+    print "usage: [--host <host>] [--port <port>] --key a.b.c.d --value <value>\n"; 
+    exit;
+}
+
+my $ag = AnyEvent::Graphite->new(host => $opt->{host}, port => $opt->{port});
+
+$ag->send($opt->{key}, $opt->{value});
+
+$ag->finish;

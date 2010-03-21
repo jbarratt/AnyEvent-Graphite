@@ -1,5 +1,7 @@
 Revision history for AnyEvent-Graphite
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+0.01    03/22 
+        Initial minimalist features
 
+0.02    03/22
+        Added trivial test client

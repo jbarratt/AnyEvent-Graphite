@@ -8,3 +8,5 @@ pm_to_blib*
 .lwpcookies
 AnyEvent-Graphite-*
 cover_db
+META.yml
+Makefile.PL

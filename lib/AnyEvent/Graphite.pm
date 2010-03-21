@@ -3,10 +3,11 @@ package AnyEvent::Graphite;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use AnyEvent;
 use AnyEvent::Socket;
+use AnyEvent::Handle;
 
 sub new {
     my($class, %args) = @_;
@@ -25,7 +26,7 @@ sub new {
 
 sub send {
     my($self, $id, $value, $ts) = @_;
-    $ts ||= AnyEvent->now; # cached time() from the framework
+    $ts ||= AE::now; # cached time() from the framework
     if($self->{conn}) {
         #should be AnyEvent::Handle
         $self->{conn}->push_write(join(" ", $id, $value, $ts) . "\n");
@@ -39,6 +40,17 @@ sub send {
         $self->{conn} = $handle;
         $self->send($id, $value, $ts);
     }
+}
+
+sub finish {
+    # you need to let the client actually process the data, so the event loop needs to run
+    # this lets you let your data get out, but still exit when it's done
+    my($self) = @_;
+    $self->{conn}->on_drain(sub {
+        print "All data transmitted\n";
+        exit;
+    });
+    AnyEvent->condvar->recv;
 }
 
 =head1 NAME
