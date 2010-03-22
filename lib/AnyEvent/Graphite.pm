@@ -3,7 +3,7 @@ package AnyEvent::Graphite;
 use warnings;
 use strict;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use AnyEvent;
 use AnyEvent::Socket;
@@ -35,7 +35,7 @@ sub send {
             connect => [$self->{host} => $self->{port}],
             on_error => sub {
                 # we have no reason to exist w/out a connection.
-                die "Unable to connect: $!\n";
+                die "Unable to connect to Graphite server at $self->{host}:$self->{port}: $!\n";
             };
         $self->{conn} = $handle;
         $self->send($id, $value, $ts);

@@ -13,7 +13,7 @@ sub new {
 
     # the rest of the args will get passed to the object
     # so remove host and port as we'll possibly set them manually here
-    my $graphite = AnyEvent::Graphite->new(host => $args{host}, host => $args{port});
+    my $graphite = AnyEvent::Graphite->new(host => $args{host}, port => $args{port});
     delete $args{host};
     delete $args{port};
    

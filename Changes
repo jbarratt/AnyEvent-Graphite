@@ -1,12 +1,10 @@
 Revision history for AnyEvent-Graphite
 
+0.04    03/22
+        Fixed small typo and added more verbose debugging when a connection to graphite couldn't be made
 0.03    03/22
         Added Graphite::SNMPAgent module, implementing a simple bridge between SNMP/Graphite servers
-
 0.02    03/22
         Added trivial test client
-
 0.01    03/22 
         Initial minimalist features
-
-
