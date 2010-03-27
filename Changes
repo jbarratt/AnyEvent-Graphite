@@ -1,5 +1,7 @@
 Revision history for AnyEvent-Graphite
 
+0.05    03/31
+        Added better error handling and a default timeout for smtp sessions
 0.04    03/22
         Fixed small typo and added more verbose debugging when a connection to graphite couldn't be made
 0.03    03/22
