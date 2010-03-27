@@ -53,6 +53,7 @@ sub gather_metrics {
         # steal a community string from the first item in the list. They should all be the same
         my $community = $self->{hosts}{$host}[0]{community} || "public";
         my $session = Net::SNMP->session (-hostname => $host, -community => $community, -nonblocking => 1);
+        $session->timeout(3);
 
         # in this kind of context it's not clear what would be better to do with errors, here.
         next unless $session;
@@ -64,10 +65,14 @@ sub gather_metrics {
                     my ($session) = @_;
                     my $result = $session->var_bind_list();
                     my $value = $result->{$metric->{oid}};
-                    if($metric->{filter}) {
-                        $value = $metric->{filter}->($value);
+                    if(!defined($value)) {
+                        warn "undefined reply from $host" . ":" . "$metric->{oid}: " . $session->error();
+                    } else {
+                        if($metric->{filter}) {
+                            $value = $metric->{filter}->($value);
+                        }
+                        $self->{graphite}->send($metric->{graphite_key}, $value);
                     }
-                    $self->{graphite}->send($metric->{graphite_key}, $value);
                 });
         }
     }

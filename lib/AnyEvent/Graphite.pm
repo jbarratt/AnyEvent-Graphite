@@ -26,9 +26,9 @@ sub new {
 
 sub send {
     my($self, $id, $value, $ts) = @_;
+    return unless (defined($id) && defined($value));
     $ts ||= AE::now; # cached time() from the framework
     if($self->{conn}) {
-        #should be AnyEvent::Handle
         $self->{conn}->push_write(join(" ", $id, $value, $ts) . "\n");
     } else {
         my $handle; $handle = new AnyEvent::Handle
