@@ -21,6 +21,7 @@ sub new {
     my $hosts = {};
     my $interval = delete $args{interval} || 60;
 
+    my $timeout = delete $args{timeout} || 3;
 
     # need to know about $self before defining the callback just below this
     my $self = bless {
@@ -53,7 +54,10 @@ sub gather_metrics {
         # steal a community string from the first item in the list. They should all be the same
         my $community = $self->{hosts}{$host}[0]{community} || "public";
         my $session = Net::SNMP->session (-hostname => $host, -community => $community, -nonblocking => 1);
-        $session->timeout(3);
+
+        # if you don't set a timeout, you can fill up your queues of outstanding processes
+        # protects against 'lame' servers
+        $session->timeout($self->{timeout});
 
         # in this kind of context it's not clear what would be better to do with errors, here.
         next unless $session;
@@ -89,6 +93,7 @@ AnyEvent::Graphite::SNMPAgent - An SNMP agent which does non-blocking streaming 
         host => '127.0.0.1',
         port => '2003',
         interval => 60,
+        timeout => 5,
     );
 
     'host' and 'port' are for the graphite server
