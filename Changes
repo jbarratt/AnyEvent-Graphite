@@ -1,5 +1,7 @@
 Revision history for AnyEvent-Graphite
 
+0.06    04/13
+        Made timeout configurable, documentation rewrites
 0.05    03/31
         Added better error handling and a default timeout for smtp sessions
 0.04    03/22
