@@ -23,10 +23,13 @@ sub new {
 
     my $timeout = delete $args{timeout} || 3;
 
+    my $snmp_version = delete $args{snmp_version} || "1";
+
     # need to know about $self before defining the callback just below this
     my $self = bless {
         graphite => $graphite,
         hosts => $hosts,
+        snmp_version => $snmp_version,
         %args,
     }, $class;
 
@@ -53,7 +56,12 @@ sub gather_metrics {
     for my $host (keys %{$self->{hosts}}) {
         # steal a community string from the first item in the list. They should all be the same
         my $community = $self->{hosts}{$host}[0]{community} || "public";
-        my $session = Net::SNMP->session (-hostname => $host, -community => $community, -nonblocking => 1);
+        my $session = Net::SNMP->session(
+            -hostname => $host,
+            -community => $community,
+            -nonblocking => 1,
+            -version => $self->{snmp_version}
+        );
 
         # if you don't set a timeout, you can fill up your queues of outstanding processes
         # protects against 'lame' servers
