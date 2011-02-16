@@ -54,6 +54,10 @@ sub add_snmp {
 sub gather_metrics {
     my ($self) = @_;
     for my $host (keys %{$self->{hosts}}) {
+
+        # skip any hosts that did not resolve
+        next unless $host;
+
         # steal a community string from the first item in the list. They should all be the same
         my $community = $self->{hosts}{$host}[0]{community} || "public";
         my $session = Net::SNMP->session(
