@@ -3,7 +3,7 @@ package AnyEvent::Graphite;
 use warnings;
 use strict;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use AnyEvent;
 use AnyEvent::Socket;
@@ -59,9 +59,10 @@ AnyEvent::Graphite - A non-blocking Graphite (http://graphite.wikidot.com/) clie
 
 =head1 VERSION
 
-Version 0.01
+Version 0.08
 
 =head1 SYNOPSIS
+
     my $graphite = AnyEvent::Graphite->new(
         host => '127.0.0.1',
         port => '2003',
