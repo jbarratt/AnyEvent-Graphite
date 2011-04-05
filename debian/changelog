@@ -1,4 +1,4 @@
-libanyevent-graphite-perl (0.07) stable; urgency=low
+libanyevent-graphite-perl (0.08) stable; urgency=low
 
   * Skipping non-resolved hosts.
 
