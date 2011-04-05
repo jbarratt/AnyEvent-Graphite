@@ -67,12 +67,12 @@ sub gather_metrics {
             -version => $self->{snmp_version}
         );
 
+        # in this kind of context it's not clear what would be better to do with errors, here.
+        next unless $session;
+
         # if you don't set a timeout, you can fill up your queues of outstanding processes
         # protects against 'lame' servers
         $session->timeout($self->{timeout});
-
-        # in this kind of context it's not clear what would be better to do with errors, here.
-        next unless $session;
 
         for my $metric (@{$self->{hosts}{$host}}) {
             $session->get_request( 
